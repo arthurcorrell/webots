@@ -8,6 +8,6 @@ orthographicViewHeight: 1
 textFiles: 0 "controllers/line_following/line_following.py"
 globalOptionalRendering: LidarPointClouds::LidarRaysPaths
 consoles: Console:All:All
-renderingDevicePerspectives: e-puck:camera;1;1;0;0
-renderingDevicePerspectives: e-puck:display;1;0.856667;0;0
+renderingDevicePerspectives: e-puck:camera;1;0.820513;0;0
+renderingDevicePerspectives: e-puck:display;1;0.106667;0;0
 renderingDevicePerspectives: e-puck:display(1);1;1;0;0

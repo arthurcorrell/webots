@@ -25,7 +25,7 @@ Solid {
           appearance PBRAppearance {
             baseColorMap ImageTexture {
               url [
-                "../../../../Downloads/HkgrqieiSS251YbQUn-htg_f1d2eadabe8b4fa999c602bc465945e1_line_course.png"
+                "HkgrqieiSS251YbQUn-htg_f1d2eadabe8b4fa999c602bc465945e1_line_course.png"
               ]
             }
             roughness 1
@@ -627,7 +627,7 @@ Robot {
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
         translation 3.1070398910487344e-07 -0.025999999999997275 0.020001137147577706
-        rotation 0.9648173767078079 -7.599251352879183e-07 -0.26292095694730466 6.283185277377264
+        rotation 0.964817376707808 -7.599251352879183e-07 -0.26292095694730466 6.283185277377264
         children [
           Pose {
             rotation 1 0 0 3.14159
