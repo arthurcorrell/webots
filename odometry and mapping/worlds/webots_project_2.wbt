@@ -9,8 +9,8 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/project
 WorldInfo {
 }
 Viewpoint {
-  orientation -0.3159874356686836 0.3980107093078013 0.8612429481719027 1.4894971957962575
-  position -0.12268596178961073 -0.9516399937235297 1.0979627951299022
+  orientation -0.3107045619373626 0.4783779383530812 0.8213508527349122 1.3381786988277455
+  position -0.26854161470696297 -0.7535239820315484 1.0011956967680284
 }
 TexturedBackground {
 }
@@ -627,7 +627,7 @@ Robot {
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
         translation 3.1070398910487344e-07 -0.025999999999997275 0.020001137147577706
-        rotation 0.964817376707808 -7.599251352879183e-07 -0.26292095694730466 6.283185277377264
+        rotation 0.9648173767078086 -7.599251352879094e-07 -0.26292095694730233 6.283185277377264
         children [
           Pose {
             rotation 1 0 0 3.14159
@@ -1982,6 +1982,10 @@ Robot {
     DEF TURRET_SLOT Pose {
       translation -0.0095 0 0.0486
       children [
+        Compass {
+        }
+        GPS {
+        }
         Lidar {
           translation 0 0 0.02
           children [
@@ -2768,7 +2772,15 @@ JamJar {
   name "jam jar(1)"
 }
 JamJar {
-  translation 0.191034 0.250984 -8.88179e-16
+  translation 0.168989 0.28516 -9.99201e-16
+}
+JamJar {
+  translation 0.0913746 0.0194733 -9.99201e-16
+  name "jam jar(3)"
+}
+JamJar {
+  translation -0.0898828 0.0387639 -9.99201e-16
+  name "jam jar(2)"
 }
 Wineglass {
   translation 0.410789 0.452126 1.11022e-16
