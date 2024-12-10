@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from skimage.draw import line_nd
 from collections import defaultdict, deque
 from heapq import heapify, heappush, heappop
 
@@ -14,37 +15,10 @@ class PathPlanner():
         self.points_to_plot = []
         self.counter = 0
 
-    def bresenham_line(self, x1, y1, x2, y2):
-        # generate points on a line between (x1, y1) and (x2, y2) with bresenham line algorithm
-        points = []
-        dx = abs(x2 - x1)
-        dy = abs(y2 - y1)
-        sx = 1 if x1 < x2 else -1
-        sy = 1 if y1 < y2 else -1
-        err = dx - dy
-
-        i = 0
-        while True:
-            points.append((x1, y1))
-            if x1 == x2 and y1 == y2:
-                break
-            e2 = err * 2
-            if e2 > -dy:
-                err -= dy
-                x1 += sx
-            if e2 < dx:
-                err += dx
-                y1 += sy
-            i += 1
-        return points
-
     def check_collision(self, q1, q2):
+        x_points, y_points = line_nd(tuple(q1), tuple(q2), integer=True)
 
-        x1, y1 = int(q1[0]), int(q1[1])
-        x2, y2 = int(q2[0]), int(q2[1])
-        line_points = self.bresenham_line(x1, y1, x2, y2)
-        
-        for x, y in line_points:
+        for x, y in zip(x_points, y_points):
             if not (0 <= x < self.space.shape[0] and 0 <= y < self.space.shape[1]):
                 return True, (x, y)
             if self.space[x][y] == False:
@@ -53,8 +27,7 @@ class PathPlanner():
         return False, (x, y)
     
     def random_node(self, probability, qend):
-        rand = np.random.randint(0, 1/probability)
-        if rand == 1:
+        if np.random.rand()<probability:
             return np.array(qend)
         else:
             return np.array([np.random.randint(0, c-1) for c in self.space.shape])
@@ -120,7 +93,6 @@ class PathPlanner():
             else:
                 self.ax.plot([qnear[1],collision_point[1]],[qnear[0],collision_point[0]],'ko-', linestyle=':', linewidth=1, markersize=1) 
 
-        plt.ioff()
 
         print(f'No path found :( after {k} attempts')
         return None
@@ -131,5 +103,3 @@ if __name__ == '__main__':
 
     cspace = PathPlanner(space)
     graph = cspace.rrt((45, 10), (190, 230), 30, 200)
-
-    plt.show()
