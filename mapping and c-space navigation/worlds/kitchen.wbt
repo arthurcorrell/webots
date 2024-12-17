@@ -45,7 +45,7 @@ WorldInfo {
 Viewpoint {
   fieldOfView 1.1
   orientation 0 1 0 1.57
-  position 0.012546986654615861 -1 11.470525882113803
+  position 0.01531372889902916 -1 7.996146171027929
   exposure 0.7999999999999999
 }
 TexturedBackground {
@@ -697,14 +697,9 @@ Apple {
   rotation 0.39258687458637637 -0.3262478957786582 0.8599057252992903 3.033
   name "apple(1)"
 }
-Apple {
+DEF marker Solid {
   translation -0.742608 -1.80756 0.79923
   rotation -0.7079189231504496 -0.47425294851652544 0.5233879431825781 -1.98321
-  name "apple(2)"
-}
-DEF marker Solid {
-  translation -0.642646 -1.81032 0.799203
-  rotation -0.07314981379148286 0.913958172315387 -0.39916107525683037 1.9388
   children [
     Pose {
       children [
@@ -741,7 +736,7 @@ DEF marker Solid {
       ]
     }
   ]
-  name "apple"
+  name "apple(2)"
   model "apple"
   boundingObject Sphere {
     radius 0.05
