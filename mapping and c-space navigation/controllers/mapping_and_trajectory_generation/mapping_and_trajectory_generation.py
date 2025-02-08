@@ -4,7 +4,7 @@ from bt_nodes import context, blackboard, robot
 # which blackboard / context to use is configurable for each leaf node:
 #   with 'context' and 'blackboard' arguments, shared for all subclasses of LeafNode by default
 
-sink, refrigerator = (0.7, 0.6), (0.9, 1.5)
+sink, refrigerator = (0.7, 0.5), (0.9, -1.5)
 
 tree = Sequence([Selector(
                     [LoadCspace(name='check for existing cspace', file='nonexisting_file.npy'), ParallelSelector(

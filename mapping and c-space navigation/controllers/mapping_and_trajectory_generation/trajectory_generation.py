@@ -12,7 +12,7 @@ class CspaceSample():
     def __init__(self, space):
         self.space = np.array(space)
 
-        #self.fig, self.ax = plt.subplots()
+        self.fig, self.ax = plt.subplots()
         self.points_to_plot = []
         self.counter = 0
 
@@ -22,7 +22,7 @@ class CspaceSample():
         for x, y in zip(x_points, y_points):
             if not (0 <= x < self.space.shape[0] and 0 <= y < self.space.shape[1]):
                 return True, (x, y)
-            if self.space[x][y] == False:
+            if self.space[x][y] == True:
                 return True, (x, y)
 
         return False, (x, y)
@@ -60,13 +60,10 @@ class CspaceSample():
         graph = defaultdict(list)
         graph[qstart] = []
 
-        # plt.imshow(self.space)
-        # plt.ion()
-        # self.ax.plot(qstart[1],qstart[0],'y*')
-        # self.ax.plot(qend[1],qend[0],'y*')
-
-        # debug
-        print('RRT algorithm (internal): plotted given cspace')
+        plt.imshow(self.space)
+        plt.ion()
+        self.ax.plot(qstart[1],qstart[0],'y*')
+        self.ax.plot(qend[1],qend[0],'y*')
 
         k = 0
         while k < num_nodes:
@@ -88,9 +85,9 @@ class CspaceSample():
             is_collision, collision_point = self.check_collision(qnear, qnew)
 
             if not is_collision:
-                # self.ax.plot([qnear[1],qnew[1]],[qnear[0],qnew[0]],'ro-', linewidth=1, markersize=2) 
-                # plt.draw()
-                # plt.pause(0.0001)
+                self.ax.plot([qnear[1],qnew[1]],[qnear[0],qnew[0]],'ro-', linewidth=1, markersize=2) 
+                plt.draw()
+                plt.pause(0.0001)
                 
                 graph[tuple(qnear)].append(tuple(qnew))
                 k += 1
@@ -99,8 +96,8 @@ class CspaceSample():
                     print(f'Path found :) after {k} attempts')
                     return graph
 
-            #else:
-                #self.ax.plot([qnear[1],collision_point[1]],[qnear[0],collision_point[0]],'ko:', linewidth=1, markersize=1) 
+            else:
+                self.ax.plot([qnear[1],collision_point[1]],[qnear[0],collision_point[0]],'ko:', linewidth=1, markersize=1) 
 
 
         print(f'No path found :( after {k} attempts')
@@ -138,7 +135,7 @@ class ShortestPath():
                 x, y = i + delta[0], j + delta[1]
                 dist = np.sqrt(delta[0]**2+delta[1]**2)
                 if (0 <= x < len(self.graph)) and (0 <= y < len(self.graph[0])):
-                    if self.graph[x][y]:
+                    if not self.graph[x][y]:
                         adj.append((dist,(x, y)))
         return adj
 
@@ -176,6 +173,8 @@ class ShortestPath():
                         self.plot_path(p, 50, 'r')
                         plt.ioff()
                         plt.show()
+
+                path = path[::-1]
                 print(path)
                 return path
             
@@ -213,7 +212,10 @@ if __name__ == '__main__':
     space = np.load('/Users/arthu/webots/mapping and c-space navigation/controllers/mapping_and_trajectory_generation/cspace.npy')
 
     cspace = CspaceSample(space)
-    cspace = cspace.rrt((45, 10), (190, 230), 30, 200)
+    cspace = cspace.rrt((75, 40), (160, 180), 10, 200)
 
     graph = ShortestPath(cspace, type='graph')
-    shortest_path = graph.dijkstra((45, 10), (190, 230))
+    shortest_path = graph.dijkstra((75, 40), (160, 180))
+
+
+

@@ -202,7 +202,7 @@ class FollowTrajectory(LeafNode):
         # get world frame orientation with compass data
         theta=np.arctan2(context.compass.getValues()[0],context.compass.getValues()[1])
 
-        context.marker.setSFVec3f([*waypoints[self.index], 1])
+        context.marker.setSFVec3f([*waypoints[self.index], 3])
 
         # compute error terms
         rho = np.sqrt((xw-waypoints[self.index][0])**2+(yw-waypoints[self.index][1])**2)
@@ -215,16 +215,16 @@ class FollowTrajectory(LeafNode):
         
         # trajectory following
         if self.clockwise:
-            if rho < 0.3 and self.index < len(waypoints) - 1:
+            if rho < 0.2 and self.index < len(waypoints) - 1:
                 self.index += 1
-                context.marker.setSFVec3f([*waypoints[self.index], 0])
-            elif rho < 0.3 and self.index == len(waypoints) - 1:
+                context.marker.setSFVec3f([*waypoints[self.index], 3])
+            elif rho < 0.2 and self.index == len(waypoints) - 1:
                 self.clockwise = False
         else:
-            if rho < 0.3 and self.index > 0:
+            if rho < 0.2 and self.index > 0:
                 self.index -= 1
-                context.marker.setSFVec3f([*waypoints[self.index], 0])
-            elif rho < 0.3 and self.index == 0:
+                context.marker.setSFVec3f([*waypoints[self.index], 3])
+            elif rho < 0.2 and self.index == 0:
                 self.status = 'SUCCESS'  
                             
             if self.index == len(waypoints)-1:
@@ -301,30 +301,20 @@ class CreateTrajectory(LeafNode):
 
         space = blackboard.read('cspace')
 
-        space = np.load('/Users/arthu/webots/mapping and c-space navigation/controllers/mapping_and_trajectory_generation/cspace.npy')
-
-
-        # debug 1
-        print('BLACKBOARD: read cspace')
-        print(space)
-
 
         cspace = CspaceSample(space)
 
         # debug 1.5
-        print('RRT algorithm: initialized cspace object')
+        print(f'RRT algorithm: planning path from pixels {start} to {target}')
 
-        sampled_cspace = cspace.rrt(start, target, 10, 300)
+        sampled_cspace = cspace.rrt(start, target, 20, 300)
 
-        # debug 2
-        print('RRT algorithm: sampled cspace')
-        print(sampled_cspace)
 
         graph = ShortestPath(sampled_cspace, type='graph')
         map_shortest_path = graph.dijkstra(start, target)
 
         # debug 3
-        print(f'Dijkstra algorithm: found path from {start_world_point} to {self.target}')
+        print(f'Dijkstra algorithm: found path from world coordinates{start_world_point} to {self.target}')
     
 
         shortest_path = []
